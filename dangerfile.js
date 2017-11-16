@@ -24,7 +24,7 @@ function incrementedVersionWithoutChangelog() {
       fail('Looks like you tried to create a version without a changelog entry. You culprit!');
     }
   } catch (err) {
-    fail('Could not find CHANGELOG.md');
+    warn('Could not find CHANGELOG.md');
   }
 }
 
