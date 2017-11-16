@@ -29,5 +29,42 @@ function incrementedVersionWithoutChangelog() {
   }
 }
 
+function pullRequestWorkers() {
+  if (danger.github.pr.assignees.length <= 0) {
+    fail("Please assign someone to merge this PR.")
+  }
+
+  if (danger.github.pr.requested_reviewers.length <= 0) {
+    fail("Please assign someone to review this PR.")
+  }
+}
+
+function encourageMoreTests() {
+  const modifiedAppFiles = danger.git.modified_files;
+  const hasAppChanges = modifiedAppFiles.length > 0;
+
+  const testChanges = modifiedAppFiles.filter(filePath =>
+    filePath.includes('test'),
+  );
+  const hasTestChanges = testChanges.length > 0;
+
+  // Warn if there are library changes, but not tests
+  if (hasAppChanges && !hasTestChanges) {
+    warn(
+      "There are library changes, but not tests. That's OK as long as you're refactoring existing code",
+    );
+  }
+}
+
+function smallerPullrequests() {
+  const bigPRThreshold = 1337;
+  if (danger.github.pr.additions + danger.github.pr.deletions > bigPRThreshold) {
+    warn('Pullrequest is relatively big. Consider cutting it into smaller parts');
+  }
+}
+
 untouchedChangelog();
 incrementedVersionWithoutChangelog();
+pullRequestWorkers();
+encourageMoreTests();
+smallerPullrequests();
