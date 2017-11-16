@@ -16,12 +16,13 @@ function untouchedChangelog() {
 
 function incrementedVersionWithoutChangelog() {
   const project = require('./package.json');
-  const version = new RegExp(project.version, 'g');
+  const versionChunks = project.version.split('.');
+  const versionExp = new RegExp(versionChunks.join('\\.'));
 
   try {
-    const changelog = fs.readFile('CHANGELOG.md', 'utf8');
-    if (!version.test(changelog)) {
-      fail('Looks like you tried to create a version without a changelog entry. You culprit!');
+    const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+    if (!versionExp.test(changelog)) {
+      fail(`Looks like you tried to create a version (${project.version}) without a changelog entry. You culprit!`);
     }
   } catch (err) {
     warn('Could not find CHANGELOG.md');
