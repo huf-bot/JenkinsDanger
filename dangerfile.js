@@ -2,12 +2,15 @@
 
 const fs = require('fs');
 
-const _ = require('underscore');
-
 function untouchedChangelog() {
-  const hasChangelog = _.contains(danger.git.modified_files, "CHANGELOG.md")
-  const isTrivial = _.contains((danger.github.pr.body + danger.github.pr.title), "#trivial")
 
+  const changelogExp = /changelog\.md/i;
+  const trivialExp = /#trivial/i;
+  const hasChangelog = danger.git.modified_files.find((fileName) => {
+    return changelogExp.test(fileName);
+  }) !== undefined;
+
+  const isTrivial = trivialExp.test(danger.github.pr.body + danger.github.pr.title);
 
   if (!hasChangelog && !isTrivial) {
     warn('Your CHANGELOG.md seems to be untouched. Please make sure to add an entry if you touch code');
@@ -56,7 +59,7 @@ function encourageMoreTests() {
   }
 }
 
-function smallerPullrequests() {
+function smallerPullRequests() {
   const bigPRThreshold = 1337;
   if (danger.github.pr.additions + danger.github.pr.deletions > bigPRThreshold) {
     warn('Pullrequest is relatively big. Consider cutting it into smaller parts');
@@ -67,4 +70,4 @@ untouchedChangelog();
 incrementedVersionWithoutChangelog();
 pullRequestWorkers();
 encourageMoreTests();
-smallerPullrequests();
+smallerPullRequests();
