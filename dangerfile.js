@@ -21,10 +21,10 @@ function incrementedVersionWithoutChangelog() {
   try {
     const changelog = fs.readFile('CHANGELOG.md', 'utf8');
     if (!version.test(changelog)) {
-      error('Looks like you tried to create a version without a changelog entry. You culprit!');
+      fail('Looks like you tried to create a version without a changelog entry. You culprit!');
     }
   } catch (err) {
-
+    fail('Could not find CHANGELOG.md');
   }
 }
 
