@@ -1,0 +1,26 @@
+{
+  "name": "JenkinsDanger",
+  "version": "0.1.0",
+  "description": "test123",
+  "main": "index.js",
+  "dependencies": {
+    "danger": "2.0.1",
+    "lodash": "4.17.4",
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "danger": "danger"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huf-bot/JenkinsDanger.git"
+  },
+  "keywords": [],
+  "author": "Philipp Tusch <philipp.tusch@huf-group.com> (https://github.com/ptusch)",
+  "license": "HUF PROPRIETARY",
+  "bugs": {
+    "url": "https://github.com/huf-bot/JenkinsDanger/issues"
+  },
+  "homepage": "https://github.com/huf-bot/JenkinsDanger#readme"
+}
